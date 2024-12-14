@@ -1,0 +1,39 @@
+.custom-bg {
+    background-color: #65B037;
+}
+
+.text-title {
+    color: #FFFFFF;
+}
+
+.nav-bar {
+    background-color: #4C9F38;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.nav-item {
+    padding: 10px 20px;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 1.20rem;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #65B037;
+    border-radius: 8px;
+    transform: scale(1.05);
+}
+
+.btn-cancel {
+    background-color: #E74C3C;
+}
+
+.btn-cancel:hover {
+    background-color: #C0392B;
+}
+
+th, td {
+    text-align: center; /* Centraliza o texto nas células da tabela */
+}

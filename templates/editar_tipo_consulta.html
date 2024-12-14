@@ -3,45 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Tipo de Consulta</title>
+    
+    <!-- Tailwind CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .custom-bg {
-            background-color: #65B037;
-        }
-        .text-title {
-            color: #FFFFFF;
-        }
-        .nav-bar {
-            background-color: #4C9F38;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-        }
-        .nav-item {
-            padding: 10px 20px;
-            color: #FFFFFF;
-            font-weight: bold;
-            font-size: 1.20rem;
-            transition: all 0.3s ease;
-        }
-        .nav-item:hover {
-            background-color: #65B037;
-            border-radius: 8px;
-            transform: scale(1.05);
-        }
-        .btn-cadastrar, .btn-update, .btn-delete {
-            background-color: #4CAF50;
-            transition: background-color 0.3s ease;
-        }
-        .btn-cadastrar:hover, .btn-update:hover {
-            background-color: #45A049;
-        }
-        .btn-delete {
-            background-color: #E74C3C;
-        }
-        .btn-delete:hover {
-            background-color: #C0392B;
-        }
-    </style>
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/editar_tipo_consulta.css') }}">
 </head>
 <body class="custom-bg font-sans text-gray-900">
     <h1 class="text-4xl font-bold text-center text-title py-8">Editar Tipo de Consulta</h1>
@@ -69,23 +36,7 @@
         </ul>
     </nav>
 
-    <script>
-        // eslint-disable-next-line no-template-curly-in-string
-            // Exibindo mensagens flash com SweetAlert2
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    Swal.fire({
-                        icon: '{{ "success" if category == "success" else "error" }}',
-                        title: '{{ message }}',
-                        showConfirmButton: false,
-                        timer: 3000 // Duração do popup em milissegundos
-                    });
-                {% endfor %}
-            {% endif %}
-            {% endwith %}
-        </script>
-        
+    <!-- Script JS personalizado -->
+    <script src="{{ url_for('static', filename='js/editar_tipo_consulta.js') }}"></script>
 </body>
 </html>
-
