@@ -33,6 +33,20 @@ def config_horarios():
     # Lógica para carregar as configurações de horários
     return render_template('config_horarios.html')
 
+@app.route('/marcar-folga', methods=['GET', 'POST'])
+def marcar_folga():
+    # Lógica simulada para "Marcar Folga"
+    return render_template('marcar_folga.html')
+
+@app.route('/editar-tipo-consulta/<int:id>', methods=['GET', 'POST'])
+def editar_tipo_consulta(id):
+    # Substitua pela lógica necessária para editar o tipo de consulta
+    if request.method == 'POST':
+        # Código para atualizar o tipo de consulta no banco de dados ou arquivo Excel
+        pass
+    # Renderizar um formulário para editar o tipo de consulta
+    return render_template('editar_tipo_consulta.html', id=id)
+
 # Rota para submissão de agendamentos
 @app.route('/submit', methods=['POST'])
 def submit():
