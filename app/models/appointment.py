@@ -1,4 +1,5 @@
 from app.extensions import db
+from sqlalchemy.orm import relationship
 
 class Appointment(db.Model):
     __tablename__ = "appointments"
@@ -10,7 +11,8 @@ class Appointment(db.Model):
     duration = db.Column(db.Integer, nullable=False)  # Em minutos
     created_at = db.Column(db.DateTime, default=db.func.now())
 
-    user = db.relationship("User", backref="appointments")
+    # Relacionamento com usuário
+    user = relationship("User", backref="appointments")
 
     def __repr__(self):
         return f"<Appointment {self.type} on {self.date}>"
