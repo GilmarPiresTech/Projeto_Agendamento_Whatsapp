@@ -28,6 +28,11 @@ def index():
     dias_disponiveis = gerar_dias_disponiveis(config, tipos_consulta, agendamentos)
     return render_template('form.html', tipos_consulta=tipos_consulta, dias_disponiveis=dias_disponiveis)
 
+@app.route('/config-horarios')
+def config_horarios():
+    # Lógica para carregar as configurações de horários
+    return render_template('config_horarios.html')
+
 # Rota para submissão de agendamentos
 @app.route('/submit', methods=['POST'])
 def submit():
