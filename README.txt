@@ -1,101 +1,100 @@
 Resumo Completo do Projeto de Agendamento de Consultas
-Este projeto È uma aplicaÁ„o web para agendamento de consultas, desenvolvida utilizando o framework Flask em Python para o backend, e HTML, CSS (com Tailwind CSS) e JavaScript no frontend. A aplicaÁ„o permite que os usu·rios agendem consultas de diferentes tipos, com duraÁıes e valores variados, e que o administrador configure hor·rios de trabalho, tipos de consulta e folgas.
+Vis√£o Geral
+Este projeto √© uma aplica√ß√£o web para agendamento de consultas, desenvolvida utilizando o framework Flask em Python para o backend, e HTML, CSS (com Tailwind CSS) e JavaScript no frontend. A aplica√ß√£o permite que os usu√°rios agendem consultas de diferentes tipos, com dura√ß√µes e valores variados, e que o administrador configure hor√°rios de trabalho, tipos de consulta e folgas.
 ________________________________________
 Tecnologias Utilizadas
-ï † Backend:
-o † Python com o framework Flask para criaÁ„o das rotas e lÛgica de negÛcio.
-o † openpyxl e pandas para manipulaÁ„o de arquivos Excel onde os dados s„o armazenados.
-ï † Frontend:
-o † HTML e CSS para estrutura e estilizaÁ„o das p·ginas.
-o † Tailwind CSS para estilos e design responsivo.
-o † JavaScript para interatividade e atualizaÁ„o din‚mica de conte˙do.
-o † SweetAlert2 para exibiÁ„o de mensagens de sucesso e erro ao usu·rio.
+‚Ä¢	Backend:
+o	Python com o framework Flask para cria√ß√£o das rotas e l√≥gica de neg√≥cio.
+o	openpyxl e pandas para manipula√ß√£o de arquivos Excel onde os dados s√£o armazenados.
+‚Ä¢	Frontend:
+o	HTML e CSS para estrutura e estiliza√ß√£o das p√°ginas.
+o	Tailwind CSS para estilos e design responsivo.
+o	JavaScript para interatividade e atualiza√ß√£o din√¢mica de conte√∫do.
+o	SweetAlert2 para exibi√ß√£o de mensagens de sucesso e erro ao usu√°rio.
 ________________________________________
 Estrutura do Projeto
 Arquivos Principais
-ï † app.py: Arquivo principal da aplicaÁ„o Flask, contendo todas as rotas e funÁıes de backend.
-ï † Templates HTML:
-o † form.html: P·gina principal onde os usu·rios podem agendar consultas.
-o † calendario.html: Exibe o calend·rio com os agendamentos existentes.
-o † config_horarios.html: Permite ao administrador configurar os hor·rios de trabalho.
-o † tipos_consulta.html: Permite ao administrador gerenciar os tipos de consulta.
-o † marcar_folga.html: Permite ao administrador marcar folgas.
-ï † agendamentos.xlsx: Arquivo Excel onde todos os dados (agendamentos, configuraÁıes, tipos de consulta e folgas) s„o armazenados.
+‚Ä¢	app.py: Arquivo principal da aplica√ß√£o Flask, contendo todas as rotas e fun√ß√µes de backend.
+‚Ä¢	Templates HTML:
+o	form.html: P√°gina principal onde os usu√°rios podem agendar consultas.
+o	calendario.html: Exibe o calend√°rio com os agendamentos existentes.
+o	config_horarios.html: Permite ao administrador configurar os hor√°rios de trabalho.
+o	tipos_consulta.html: Permite ao administrador gerenciar os tipos de consulta.
+o	marcar_folga.html: Permite ao administrador marcar folgas.
+‚Ä¢	agendamentos.xlsx: Arquivo Excel onde todos os dados (agendamentos, configura√ß√µes, tipos de consulta e folgas) s√£o armazenados.
 ________________________________________
 Funcionalidades Principais
 Agendamento de Consultas
-ï † SeleÁ„o do Tipo de Consulta:
-o † Os usu·rios podem selecionar entre diferentes tipos de consulta, cada um com sua prÛpria duraÁ„o e valor.
-o † Os detalhes da consulta selecionada (duraÁ„o e valor) s„o exibidos dinamicamente.
-ï † AtualizaÁ„o Din‚mica de Datas e Hor·rios DisponÌveis:
-o † ApÛs selecionar o tipo de consulta, o sistema atualiza as datas e hor·rios disponÌveis com base na duraÁ„o da consulta e nos agendamentos existentes.
-o † Apenas hor·rios que n„o conflitam com agendamentos existentes s„o exibidos.
-ï † Formul·rio de Agendamento:
-o † Os usu·rios preenchem seus dados pessoais (nome, email, celular) e podem adicionar um coment·rio adicional.
-o † O formul·rio valida se todos os campos obrigatÛrios foram preenchidos.
-ï † Submiss„o do Agendamento:
-o † Ao enviar o formul·rio, o sistema verifica novamente a disponibilidade do hor·rio selecionado.
-o † Se o hor·rio estiver disponÌvel, o agendamento È salvo no arquivo Excel e uma mensagem de sucesso È exibida.
-o † Se o hor·rio n„o estiver disponÌvel, uma mensagem de erro È exibida.
-Gest„o de Agendamentos
-ï † VisualizaÁ„o do Calend·rio:
-o † A rota /calendario permite visualizar todos os agendamentos existentes.
-o † Os agendamentos s„o listados com detalhes como nome do cliente, data, hor·rio e tipo de consulta.
-ï † Cancelamento de Agendamentos:
-o † Os agendamentos podem ser cancelados, removendo-os do arquivo Excel.
-ConfiguraÁ„o do Sistema
-ï † ConfiguraÁ„o de Hor·rios de Trabalho:
-o † A rota /config-horarios permite ao administrador definir os hor·rios de inÌcio e fim de trabalho para cada dia da semana.
-o † … possÌvel marcar determinados dias da semana como folga.
-ï † Gest„o de Tipos de Consulta:
-o † A rota /tipos-consulta permite adicionar, editar e excluir tipos de consulta.
-o † Cada tipo de consulta tem um nome, duraÁ„o (em minutos) e valor.
-ï † MarcaÁ„o de Folgas:
-o † A rota /marcar-folga permite marcar dias especÌficos como folga.
-o † Os dias marcados como folga n„o estar„o disponÌveis para agendamento.
+‚Ä¢	Sele√ß√£o do Tipo de Consulta:
+o	Os usu√°rios podem selecionar entre diferentes tipos de consulta, cada um com sua pr√≥pria dura√ß√£o e valor.
+o	Os detalhes da consulta selecionada (dura√ß√£o e valor) s√£o exibidos dinamicamente.
+‚Ä¢	Atualiza√ß√£o Din√¢mica de Datas e Hor√°rios Dispon√≠veis:
+o	Ap√≥s selecionar o tipo de consulta, o sistema atualiza as datas e hor√°rios dispon√≠veis com base na dura√ß√£o da consulta e nos agendamentos existentes.
+o	Apenas hor√°rios que n√£o conflitam com agendamentos existentes s√£o exibidos.
+‚Ä¢	Formul√°rio de Agendamento:
+o	Os usu√°rios preenchem seus dados pessoais (nome, email, celular) e podem adicionar um coment√°rio adicional.
+o	O formul√°rio valida se todos os campos obrigat√≥rios foram preenchidos.
+‚Ä¢	Submiss√£o do Agendamento:
+o	Ao enviar o formul√°rio, o sistema verifica novamente a disponibilidade do hor√°rio selecionado.
+o	Se o hor√°rio estiver dispon√≠vel, o agendamento √© salvo no arquivo Excel e uma mensagem de sucesso √© exibida.
+o	Se o hor√°rio n√£o estiver dispon√≠vel, uma mensagem de erro √© exibida.
+Gest√£o de Agendamentos
+‚Ä¢	Visualiza√ß√£o do Calend√°rio:
+o	A rota /calendario permite visualizar todos os agendamentos existentes.
+o	Os agendamentos s√£o listados com detalhes como nome do cliente, data, hor√°rio e tipo de consulta.
+‚Ä¢	Cancelamento de Agendamentos:
+o	Os agendamentos podem ser cancelados, removendo-os do arquivo Excel.
+Configura√ß√£o do Sistema
+‚Ä¢	Configura√ß√£o de Hor√°rios de Trabalho:
+o	A rota /config-horarios permite ao administrador definir os hor√°rios de in√≠cio e fim de trabalho para cada dia da semana.
+o	√â poss√≠vel marcar determinados dias da semana como folga.
+‚Ä¢	Gest√£o de Tipos de Consulta:
+o	A rota /tipos-consulta permite adicionar, editar e excluir tipos de consulta.
+o	Cada tipo de consulta tem um nome, dura√ß√£o (em minutos) e valor.
+‚Ä¢	Marca√ß√£o de Folgas:
+o	A rota /marcar-folga permite marcar dias espec√≠ficos como folga.
+o	Os dias marcados como folga n√£o estar√£o dispon√≠veis para agendamento.
 ________________________________________
-Detalhes TÈcnicos Importantes
-ManipulaÁ„o de Dados com Excel
-ï † Leitura e Escrita:
-o † Os dados s„o armazenados no arquivo agendamentos.xlsx, dividido em diferentes abas:
-? † Agendamentos: ContÈm todos os agendamentos realizados.
-? † ConfiguraÁıes: Armazena os hor·rios de trabalho para cada dia da semana.
-? † Folgas: Lista de datas marcadas como folga.
-? † TiposConsulta: ContÈm os tipos de consulta disponÌveis.
-o † As bibliotecas openpyxl e pandas s„o utilizadas para manipular o arquivo Excel.
-ï † VerificaÁ„o e CriaÁ„o do Arquivo Excel:
-o † A funÁ„o verificar_ou_criar_excel() assegura que o arquivo Excel e todas as abas necess·rias existam, criando-os se necess·rio.
-LÛgica de Agendamento e VerificaÁ„o de Disponibilidade
-ï † C·lculo de Hor·rios DisponÌveis:
-o † A funÁ„o gerar_dias_disponiveis() calcula os hor·rios disponÌveis para agendamento, considerando:
-? † Os hor·rios de trabalho configurados.
-? † As folgas marcadas.
-? † Os agendamentos j· existentes.
-? † A duraÁ„o da consulta selecionada.
-o † Os hor·rios s„o gerados em intervalos de 15 minutos, mas apenas s„o considerados disponÌveis se n„o houver sobreposiÁ„o com agendamentos existentes.
-ï † VerificaÁ„o de Conflitos de Hor·rio:
-o † As funÁıes verificar_horario_disponivel() e verificar_disponibilidade() verificam se o hor·rio desejado est· disponÌvel, considerando a duraÁ„o da consulta e possÌveis conflitos com agendamentos existentes.
-ï † NormalizaÁ„o de Dados:
-o † Para evitar problemas de comparaÁ„o, os nomes dos tipos de consulta s„o normalizados (removendo espaÁos extras e ignorando mai˙sculas/min˙sculas).
-ComunicaÁ„o entre Frontend e Backend
-ï † AtualizaÁ„o Din‚mica via AJAX:
-o † O frontend utiliza fetch para enviar requisiÁıes AJAX ao backend, obtendo os hor·rios disponÌveis apÛs a seleÁ„o do tipo de consulta.
-o † Os dados s„o enviados e recebidos no formato JSON.
-ï † RenderizaÁ„o Din‚mica no Frontend:
-o † O JavaScript È utilizado para renderizar dinamicamente os botıes de datas e hor·rios disponÌveis.
-o † Eventos s„o adicionados aos botıes para que, ao serem clicados, atualizem os campos escondidos que ser„o submetidos no formul·rio.
+Detalhes T√©cnicos Importantes
+Manipula√ß√£o de Dados com Excel
+‚Ä¢	Leitura e Escrita:
+o	Os dados s√£o armazenados no arquivo agendamentos.xlsx, dividido em diferentes abas:
+ÔÇß	Agendamentos: Cont√©m todos os agendamentos realizados.
+ÔÇß	Configura√ß√µes: Armazena os hor√°rios de trabalho para cada dia da semana.
+ÔÇß	Folgas: Lista de datas marcadas como folga.
+ÔÇß	TiposConsulta: Cont√©m os tipos de consulta dispon√≠veis.
+o	As bibliotecas openpyxl e pandas s√£o utilizadas para manipular o arquivo Excel.
+‚Ä¢	Verifica√ß√£o e Cria√ß√£o do Arquivo Excel:
+o	A fun√ß√£o verificar_ou_criar_excel() assegura que o arquivo Excel e todas as abas necess√°rias existam, criando-os se necess√°rio.
+L√≥gica de Agendamento e Verifica√ß√£o de Disponibilidade
+‚Ä¢	C√°lculo de Hor√°rios Dispon√≠veis:
+o	A fun√ß√£o gerar_dias_disponiveis() calcula os hor√°rios dispon√≠veis para agendamento, considerando:
+ÔÇß	Os hor√°rios de trabalho configurados.
+ÔÇß	As folgas marcadas.
+ÔÇß	Os agendamentos j√° existentes.
+ÔÇß	A dura√ß√£o da consulta selecionada.
+o	Os hor√°rios s√£o gerados em intervalos de 15 minutos, mas apenas s√£o considerados dispon√≠veis se n√£o houver sobreposi√ß√£o com agendamentos existentes.
+‚Ä¢	Verifica√ß√£o de Conflitos de Hor√°rio:
+o	As fun√ß√µes verificar_horario_disponivel() e verificar_disponibilidade() verificam se o hor√°rio desejado est√° dispon√≠vel, considerando a dura√ß√£o da consulta e poss√≠veis conflitos com agendamentos existentes.
+‚Ä¢	Normaliza√ß√£o de Dados:
+o	Para evitar problemas de compara√ß√£o, os nomes dos tipos de consulta s√£o normalizados (removendo espa√ßos extras e ignorando mai√∫sculas/min√∫sculas).
+Comunica√ß√£o entre Frontend e Backend
+‚Ä¢	Atualiza√ß√£o Din√¢mica via AJAX:
+o	O frontend utiliza fetch para enviar requisi√ß√µes AJAX ao backend, obtendo os hor√°rios dispon√≠veis ap√≥s a sele√ß√£o do tipo de consulta.
+o	Os dados s√£o enviados e recebidos no formato JSON.
+‚Ä¢	Renderiza√ß√£o Din√¢mica no Frontend:
+o	O JavaScript √© utilizado para renderizar dinamicamente os bot√µes de datas e hor√°rios dispon√≠veis.
+o	Eventos s√£o adicionados aos bot√µes para que, ao serem clicados, atualizem os campos escondidos que ser√£o submetidos no formul√°rio.
 ________________________________________
-Fluxo de Uso da AplicaÁ„o
-1. †Usu·rio acessa a p·gina de agendamento.
-2. †Seleciona o tipo de consulta desejado.
-o † Os detalhes da consulta (duraÁ„o e valor) s„o exibidos.
-o † As datas e hor·rios disponÌveis s„o atualizados dinamicamente.
-3. †Escolhe uma data e um hor·rio disponÌvel.
-4. †Preenche os dados pessoais e coment·rio adicional.
-5. †Submete o formul·rio de agendamento.
-o † O sistema verifica novamente a disponibilidade do hor·rio.
-o † Se disponÌvel, o agendamento È salvo e uma mensagem de sucesso È exibida.
-6. †Usu·rio recebe confirmaÁ„o do agendamento.
-o † O sistema envia um email ao cliente confirmando o agendamento 
-
-
+Fluxo de Uso da Aplica√ß√£o
+1.	Usu√°rio acessa a p√°gina de agendamento.
+2.	Seleciona o tipo de consulta desejado.
+o	Os detalhes da consulta (dura√ß√£o e valor) s√£o exibidos.
+o	As datas e hor√°rios dispon√≠veis s√£o atualizados dinamicamente.
+3.	Escolhe uma data e um hor√°rio dispon√≠vel.
+4.	Preenche os dados pessoais e coment√°rio adicional.
+5.	Submete o formul√°rio de agendamento.
+o	O sistema verifica novamente a disponibilidade do hor√°rio.
+o	Se dispon√≠vel, o agendamento √© salvo e uma mensagem de sucesso √© exibida.
+6.	Usu√°rio recebe confirma√ß√£o do agendamento.
+o	O sistema envia um email ao cliente confirmando o agendamento 
