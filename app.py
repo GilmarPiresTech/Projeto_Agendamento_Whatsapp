@@ -35,17 +35,69 @@ def config_horarios():
 
 @app.route('/marcar-folga', methods=['GET', 'POST'])
 def marcar_folga():
-    # Lógica simulada para "Marcar Folga"
+    if request.method == 'POST':
+        # Lógica para processar dados enviados no formulário de marcação de folgas
+        folga = request.form.get("data_folga")  # Exemplo de campo no formulário
+        # Adicione lógica para salvar essa folga em um arquivo Excel
+        return "Folga marcada com sucesso!"
     return render_template('marcar_folga.html')
 
 @app.route('/editar-tipo-consulta/<int:id>', methods=['GET', 'POST'])
 def editar_tipo_consulta(id):
-    # Substitua pela lógica necessária para editar o tipo de consulta
+    import pandas as pd
+
+    # Caminho do arquivo onde os dados estão armazenados
+    caminho_arquivo = "dados_tipos_consulta.xlsx"
+
     if request.method == 'POST':
-        # Código para atualizar o tipo de consulta no banco de dados ou arquivo Excel
-        pass
-    # Renderizar um formulário para editar o tipo de consulta
-    return render_template('editar_tipo_consulta.html', id=id)
+        try:
+            # Ler os dados existentes
+            df = pd.read_excel(caminho_arquivo)
+
+            # Atualizar o tipo de consulta
+            df.loc[df['id'] == id, 'nome'] = request.form.get("nome_tipo")
+            df.loc[df['id'] == id, 'duracao'] = request.form.get("duracao")
+            df.loc[df['id'] == id, 'preco'] = request.form.get("preco")
+
+            # Salvar de volta no Excel
+            df.to_excel(caminho_arquivo, index=False)
+
+            return f"Tipo de consulta {id} atualizado com sucesso!"
+        except Exception as e:
+            return f"Erro ao atualizar o tipo de consulta: {str(e)}"
+
+    try:
+        # Ler os dados para exibição no formulário
+        df = pd.read_excel(caminho_arquivo)
+        tipo_consulta = df[df['id'] == id].to_dict('records')[0]
+    except Exception as e:
+        return f"Erro ao carregar os dados: {str(e)}"
+
+    return render_template('editar_tipo_consulta.html', tipo_consulta=tipo_consulta)
+
+
+
+@app.route('/agendar', methods=['POST'])
+def agendar():
+    try:
+        # Capturar dados do formulário de agendamento
+        nome = request.form.get("nome")
+        data = request.form.get("data")
+        tipo_consulta = request.form.get("tipo_consulta")
+        # Salve no arquivo Excel
+        return "Agendamento realizado com sucesso!"
+    except Exception as e:
+        return f"Erro ao realizar agendamento: {str(e)}"
+    
+    @app.route('/tipos-consulta', methods=['GET'])
+def tipos_consulta():
+    # Simule a leitura de tipos de consulta de um banco de dados ou arquivo
+    tipos = [
+        {"id": 1, "nome": "Consulta Básica", "duracao": "30 minutos", "preco": "100"},
+        {"id": 2, "nome": "Consulta Avançada", "duracao": "60 minutos", "preco": "200"}
+    ]
+    return render_template('tipos_consulta.html', tipos=tipos)
+
 
 # Rota para submissão de agendamentos
 @app.route('/submit', methods=['POST'])
