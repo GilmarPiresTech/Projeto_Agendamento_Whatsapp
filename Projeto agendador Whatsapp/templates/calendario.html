@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendário de Agendamentos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .custom-bg {
+            background-color: #65B037;
+        }
+        .text-title {
+            color: #FFFFFF;
+        }
+        .nav-bar {
+            background-color: #4C9F38;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+        .nav-item {
+            padding: 10px 20px;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 1.20rem;
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: #65B037;
+            border-radius: 8px;
+            transform: scale(1.05);
+        }
+        .btn-cancel {
+            background-color: #E74C3C;
+        }
+        .btn-cancel:hover {
+            background-color: #C0392B;
+        }
+        th, td {
+            text-align: center; /* Centraliza o texto nas células da tabela */
+        }
+    </style>
+</head>
+<body class="custom-bg font-sans text-gray-900">
+    <h1 class="text-4xl font-bold text-center text-title py-8">Calendário de Agendamentos</h1>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white rounded-lg shadow-md mx-auto my-8">
+            <thead class="bg-green-600 text-white">
+                <tr>
+                    <th class="px-6 py-3">ID</th>
+                    <th class="px-6 py-3">Nome</th>
+                    <th class="px-6 py-3">Email</th>
+                    <th class="px-6 py-3">Celular</th>
+                    <th class="px-6 py-3">Data</th>
+                    <th class="px-6 py-3">Horário</th>
+                    <th class="px-6 py-3">Tipo de Consulta</th>
+                    <th class="px-6 py-3">Comentário</th>
+                    <th class="px-6 py-3">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agendamento in agendamentos %}
+                <tr class="border-b hover:bg-gray-100">
+                    <td class="px-6 py-4">{{ agendamento['ID'] }}</td>
+                    <td class="px-6 py-4">{{ agendamento['Nome'] }}</td>
+                    <td class="px-6 py-4">{{ agendamento['Email'] }}</td>
+                    <td class="px-6 py-4">{{ agendamento['Celular'] }}</td>
+                    <td class="px-6 py-4">{{ agendamento['Data'] }}</td>
+                    <td class="px-6 py-4">{{ agendamento['Horário'] }}</td>
+                    <td class="px-6 py-4">{{ agendamento['Tipo de Consulta'] }}</td>
+                    <td class="px-6 py-4">{{ agendamento['Comentário'] }}</td>
+                    <td class="px-6 py-4">
+                        <form action="{{ url_for('cancelar_agendamento') }}" method="post" class="inline">
+                            <input type="hidden" name="id" value="{{ agendamento['ID'] }}">
+                            <button type="submit" class="btn-cancel hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                Cancelar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="nav-bar mt-8">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="{{ url_for('index') }}" class="nav-item">Agendar Consulta</a></li>
+            <li><a href="{{ url_for('config_horarios') }}" class="nav-item">Configurar Horários</a></li>
+            <li><a href="{{ url_for('tipos_consulta') }}" class="nav-item">Tipos de Consulta</a></li>
+            <li><a href="{{ url_for('marcar_folga') }}" class="nav-item">Marcar Folga</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        // Exibindo mensagens flash com SweetAlert2
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                Swal.fire({
+                    icon: '{{ "success" if category == "success" else "error" }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 3000 // Duração do popup em milissegundos
+                });
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </script>
+</body>
+</html>

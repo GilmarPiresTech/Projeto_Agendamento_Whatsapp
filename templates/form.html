@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento de Consultas</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .custom-bg {
+            background-color: #65B037;
+        }
+        .btn-submit {
+            background-color: #4CAF50;
+        }
+        .btn-submit:hover {
+            background-color: #45A049;
+        }
+        .text-title {
+            color: #FFFFFF;
+        }
+        .nav-bar {
+            background-color: #4C9F38;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+        .nav-item {
+            padding: 10px 20px;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 1.20rem;
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: #65B037;
+            border-radius: 8px;
+            transform: scale(1.05);
+        }
+        .date-selection, .time-selection {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        .date-button, .time-button {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: white;
+            transition: background-color 0.3s;
+        }
+        .date-button.active, .time-button.active {
+            background-color: #28a745;
+            color: white;
+        }
+        .container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        .title {
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        label {
+            font-weight: bold; /* Todos os labels em negrito */
+        }
+        label, .title {
+            font-weight: bold !important; /* Uso do !important para garantir que o estilo seja aplicado */
+        }
+    </style>
+</head>
+<body class="custom-bg font-sans text-gray-900">
+
+    <h1 class="text-4xl font-bold text-center text-title py-8">Agende sua Consulta</h1>
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-md shadow-md mt-8">
+        <form action="{{ url_for('submit') }}" method="post" id="form-agendamento" class="space-y-4">
+            <label for="tipo_consulta" class="block text-sm font-medium text-gray-700">Tipo de Consulta:</label>
+            <select id="tipo_consulta" name="tipo_consulta" required class="w-full p-2 border border-gray-300 rounded" onchange="atualizarDetalhesConsulta()">
+                <option value="" disabled selected>Selecione um tipo de consulta</option>
+                {% for consulta in tipos_consulta %}
+                <option value="{{ consulta['Tipo'] }}" data-duracao="{{ consulta['Duração'] }}" data-valor="{{ consulta['Valor'] }}">
+                    {{ consulta['Tipo'] }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <div id="detalhes-consulta" class="space-y-4 hidden">
+                <label for="duracao" class="block text-sm font-medium text-gray-700">Duração:</label>
+                <input type="text" id="duracao" name="duracao" class="w-full p-2 border border-gray-300 rounded bg-gray-100" readonly>
+
+                <label for="valor" class="block text-sm font-medium text-gray-700">Valor (R$):</label>
+                <input type="text" id="valor" name="valor" class="w-full p-2 border border-gray-300 rounded bg-gray-100" readonly>
+            </div>
+
+            <!-- Contêiner de seleção de data -->
+            <div class="container">
+                <div class="title">Selecione uma data:</div>
+                <div class="date-selection" id="date-selection">
+                    <!-- Botões de data serão inseridos dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Contêiner de seleção de horário -->
+            <div class="container">
+                <div class="title">Selecione um horário disponível:</div>
+                <div class="time-selection" id="time-selection">
+                    <!-- Botões de horário serão inseridos dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Campos escondidos para armazenar a data e o horário selecionados -->
+            <input type="hidden" name="selected_date" id="selected_date">
+            <input type="hidden" name="selected_time" id="selected_time">
+
+            <label for="nome" class="block text-sm font-medium text-gray-700">Nome:</label>
+            <input type="text" id="nome" name="nome" required class="w-full p-2 border border-gray-300 rounded">
+
+            <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+            <input type="email" id="email" name="email" required class="w-full p-2 border border-gray-300 rounded">
+
+            <label for="celular" class="block text-sm font-medium text-gray-700">Celular:</label>
+            <input type="tel" id="celular" name="celular" required class="w-full p-2 border border-gray-300 rounded">
+
+            <label for="comentario" class="block text-sm font-medium text-gray-700">Comentário adicional:</label>
+            <textarea id="comentario" name="comentario" class="w-full p-2 border border-gray-300 rounded"></textarea>
+
+            <button type="submit" class="w-full py-2 px-4 btn-submit text-white rounded hover:bg-blue-700 transition">Agendar</button>
+        </form>
+    </div>
+
+    <nav class="nav-bar mt-8">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="{{ url_for('calendario') }}" class="nav-item">Calendário</a></li>
+            <li><a href="{{ url_for('config_horarios') }}" class="nav-item">Configurar Horários</a></li>
+            <li><a href="{{ url_for('tipos_consulta') }}" class="nav-item">Tipos de Consulta</a></li>
+            <li><a href="{{ url_for('marcar_folga') }}" class="nav-item">Marcar Folga</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        // Função para atualizar os detalhes do tipo de consulta selecionado
+        function atualizarDetalhesConsulta() {
+            const select = document.getElementById('tipo_consulta');
+            const selectedOption = select.options[select.selectedIndex];
+            const duracao = parseInt(selectedOption.getAttribute('data-duracao'));
+            const valor = selectedOption.getAttribute('data-valor');
+        
+            document.getElementById('duracao').value = duracao + ' minutos';
+            document.getElementById('valor').value = 'R$ ' + parseFloat(valor).toFixed(2);
+        
+            document.getElementById('detalhes-consulta').classList.remove('hidden');
+        
+            // Chama a função para carregar as datas e horários disponíveis após selecionar a consulta
+            renderAvailableDatesAndTimes(duracao);
+        }
+    
+        // Função para renderizar datas e horários disponíveis
+        function renderAvailableDatesAndTimes(duracaoConsulta) {
+            if (!duracaoConsulta) return;
+
+            // Verifique se availableDates e availableTimes estão sendo preenchidos corretamente
+            const availableDates = {{ dias_disponiveis.keys() | list | tojson }};
+            const availableTimes = {{ dias_disponiveis | tojson }};
+            console.log('Available Dates:', availableDates);
+            console.log('Available Times:', availableTimes);
+
+            const dateSelection = document.getElementById('date-selection');
+            const timeSelection = document.getElementById('time-selection');
+
+            // Limpa as seleções anteriores
+            dateSelection.innerHTML = '';
+            timeSelection.innerHTML = '';
+
+            // Renderiza as datas disponíveis
+            availableDates.forEach(date => {
+                const dateButton = document.createElement('button');
+                const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('pt-BR', {
+                    weekday: 'long', day: 'numeric', month: 'short'
+                });
+                dateButton.textContent = formattedDate;
+                dateButton.classList.add('date-button');
+
+                dateButton.onclick = function (e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.date-button').forEach(btn => btn.classList.remove('active'));
+                    dateButton.classList.add('active');
+                    document.getElementById('selected_date').value = date;
+                    renderTimes(date, duracaoConsulta);
+                };
+
+                dateSelection.appendChild(dateButton);
+            });
+        }
+    
+        // Renderiza os horários para a data selecionada, levando em consideração a duração da consulta
+        function renderTimes(selectedDate, duracaoConsulta) {
+            const timeSelection = document.getElementById('time-selection');
+            timeSelection.innerHTML = '';
+            const availableTimes = {{ dias_disponiveis | tojson }};
+            console.log('Selected Date:', selectedDate);
+            console.log('Available Times for Selected Date:', availableTimes[selectedDate]);
+
+            // Acessa e renderiza os horários disponíveis para a data selecionada
+            (availableTimes[selectedDate] || []).forEach(time => {
+                const startTime = new Date(`1970-01-01T${time}:00`);
+                const endTime = new Date(startTime.getTime() + duracaoConsulta * 60000);
+
+                const timeButton = document.createElement('button');
+                timeButton.textContent = time;
+                timeButton.classList.add('time-button');
+
+                timeButton.onclick = function (e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.time-button').forEach(btn => btn.classList.remove('active'));
+                    timeButton.classList.add('active');
+                    document.getElementById('selected_time').value = time;
+                };
+                timeSelection.appendChild(timeButton);
+            });
+        }
+    
+        // Exibindo mensagens flash com SweetAlert2
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                Swal.fire({
+                    icon: '{{ 'success' if category == 'success' else 'error' }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </script>
+</body>
+</html>
